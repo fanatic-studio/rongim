@@ -3,13 +3,13 @@
 ## 安装
 
 ```shell script
-eco plugin install https://github.com/iecoe/rongim
+eco plugin install https://github.com/kjeco/rongim
 ```
 
 ## 卸载
 
 ```shell script
-eco plugin uninstall https://github.com/iecoe/rongim
+eco plugin uninstall https://github.com/kjeco/rongim
 ```
 
 ## 引用
