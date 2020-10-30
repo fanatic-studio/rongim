@@ -1,5 +1,5 @@
 //
-//  vdRongcloudManager.h
+//  ecoRongcloudManager.h
 //  WeexTestDemo
 //
 //  Created by apple on 2018/7/9.
@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface vdRongcloudManager : NSObject
+@interface ecoRongcloudManager : NSObject
 
-+ (vdRongcloudManager *)sharedIntstance;
++ (ecoRongcloudManager *)sharedIntstance;
 
 - (void)init:(NSString*)appKey appSecret:(NSString*)appSecret;
 

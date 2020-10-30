@@ -5,10 +5,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import io.rong.imlib.model.UserInfo;
-import app.vd.framework.extend.module.vdCommon;
-import app.vd.framework.extend.module.vdJson;
-import app.vd.framework.ui.vd;
-import io.rong.imlib.vd.ui.entry.vd_rongim;
+import app.eco.framework.extend.module.ecoCommon;
+import app.eco.framework.extend.module.ecoJson;
+import app.eco.framework.ui.eco;
+import io.rong.imlib.eco.ui.entry.eco_rongim;
 
 public class FakeServer {
 
@@ -33,8 +33,8 @@ public class FakeServer {
 
     public static void getToken(UserInfo user, final HttpUtil.OnResponse callback) {
         final String post = "userId=" + user.getUserId() + "&name=" + user.getName() + "&portraitUri=" + user.getPortraitUri();
-        final String md5Id = md5(vd_rongim.appKey + "@" + vd_rongim.appSecret + "@" + post);
-        String token = vdCommon.getCachesString(vd.getApplication(), "__system:rongimToken:" + md5Id, "");
+        final String md5Id = md5(eco_rongim.appKey + "@" + eco_rongim.appSecret + "@" + post);
+        String token = ecoCommon.getCachesString(eco.getApplication(), "__system:rongimToken:" + md5Id, "");
         if (!"".equals(token)) {
             if (callback != null) {
                 callback.onResponse(200, token);
@@ -42,18 +42,18 @@ public class FakeServer {
             return;
         }
         String url = "http://api.cn.ronghub.com/user/getToken.json";
-        HttpUtil.Header header = HttpUtil.getRcHeader(vd_rongim.appKey, vd_rongim.appSecret);
+        HttpUtil.Header header = HttpUtil.getRcHeader(eco_rongim.appKey, eco_rongim.appSecret);
         HttpUtil httpUtil = new HttpUtil();
         httpUtil.post(url, header, post, new HttpUtil.OnResponse() {
             @Override
             public void onResponse(int code, String body) {
                 String token = body;
                 if (code == 200) {
-                    token = vdJson.getString(token, "token");
+                    token = ecoJson.getString(token, "token");
                     if ("".equals(token)) {
                         code = -1;
                     } else {
-                        vdCommon.setCachesString(vd.getApplication(), "__system:rongimToken:" + md5Id, token, 3600);
+                        ecoCommon.setCachesString(eco.getApplication(), "__system:rongimToken:" + md5Id, token, 3600);
                     }
                 }
                 callback.onResponse(code, token);

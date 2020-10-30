@@ -1,5 +1,5 @@
 //
-//  vdRongcloudModule.h
+//  ecoRongcloudModule.h
 //  WeexTestDemo
 //
 //  Created by apple on 2018/6/19.
@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "WeexSDK.h"
 
-@interface vdRongcloudModule : NSObject <WXModuleProtocol>
+@interface ecoRongcloudModule : NSObject <WXModuleProtocol>
 
 @end

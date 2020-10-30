@@ -1,4 +1,4 @@
-package io.rong.imlib.vd.ui.entry;
+package io.rong.imlib.eco.ui.entry;
 
 import android.content.Context;
 import android.os.Handler;
@@ -10,10 +10,10 @@ import com.taobao.weex.common.WXException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import app.vd.framework.extend.annotation.ModuleEntry;
-import app.vd.framework.extend.module.vdBase;
-import app.vd.framework.extend.module.vdJson;
-import app.vd.framework.ui.vd;
+import app.eco.framework.extend.annotation.ModuleEntry;
+import app.eco.framework.extend.module.ecoBase;
+import app.eco.framework.extend.module.ecoJson;
+import app.eco.framework.ui.eco;
 import io.rong.imlib.AnnotationNotFoundException;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
@@ -22,7 +22,7 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
-import io.rong.imlib.vd.ui.module.vdRongmModule;
+import io.rong.imlib.eco.ui.module.ecoRongmModule;
 
 /**
  * LiveKit是融云直播聊天室Demo对IMLib库的接口封装类。目的是在IMLib库众多通用接口中，提炼出与直播聊天室应用相关的常用接口，
@@ -32,7 +32,7 @@ import io.rong.imlib.vd.ui.module.vdRongmModule;
  */
 
 @ModuleEntry
-public class vd_rongim {
+public class eco_rongim {
 
     private static boolean isRegister = false;
 
@@ -41,15 +41,15 @@ public class vd_rongim {
      * @param content
      */
     public void init(Context content) {
-        JSONObject rongim = vdJson.parseObject(vdBase.config.getObject("rongim").get("android"));
-        if (vdJson.getBoolean(rongim, "enabled")) {
-            vd_rongim.init(vdJson.getString(rongim, "appKey"), vdJson.getString(rongim, "appSecret"));
+        JSONObject rongim = ecoJson.parseObject(ecoBase.config.getObject("rongim").get("android"));
+        if (ecoJson.getBoolean(rongim, "enabled")) {
+            eco_rongim.init(ecoJson.getString(rongim, "appKey"), ecoJson.getString(rongim, "appSecret"));
         }
         //注册模块
         if (!isRegister) {
             isRegister = true;
             try {
-                WXSDKEngine.registerModule("vdRongim", vdRongmModule.class);
+                WXSDKEngine.registerModule("ecoRongim", ecoRongmModule.class);
             } catch (WXException e) {
                 e.printStackTrace();
             }
@@ -122,12 +122,12 @@ public class vd_rongim {
      */
     public static void init(String appKey, String appSecret) {
         if (appKey != null && !"".equals(appKey)) {
-            vd_rongim.appKey = appKey;
+            eco_rongim.appKey = appKey;
         }
         if (appSecret != null && !"".equals(appSecret)) {
-            vd_rongim.appSecret = appSecret;
+            eco_rongim.appSecret = appSecret;
         }
-        RongIMClient.init(vd.getApplication(), appKey);
+        RongIMClient.init(eco.getApplication(), appKey);
         RongIMClient.setOnReceiveMessageListener(onReceiveMessageListener);
     }
 

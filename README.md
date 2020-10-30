@@ -3,24 +3,24 @@
 ## 安装
 
 ```shell script
-vd plugin install https://github.com/ivde/rongim
+eco plugin install https://github.com/iecoe/rongim
 ```
 
 ## 卸载
 
 ```shell script
-vd plugin uninstall https://github.com/ivde/rongim
+eco plugin uninstall https://github.com/iecoe/rongim
 ```
 
 ## 引用
 
 ```js
-const rongim = app.requireModule("vd/rongim");
+const rongim = app.requireModule("eco/rongim");
 ```
 
 ## 参数配置
 
-请查阅[配置相关](https://vd.app/guide/config.html)
+请查阅[配置相关](https://eco.app/guide/config.html)
 
 ## 连接登录
 

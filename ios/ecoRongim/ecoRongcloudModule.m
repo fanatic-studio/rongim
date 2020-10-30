@@ -1,18 +1,18 @@
 //
-//  vdRongcloudModule.m
+//  ecoRongcloudModule.m
 //  WeexTestDemo
 //
 //  Created by apple on 2018/6/19.
 //  Copyright © 2018年 TomQin. All rights reserved.
 //
 
-#import "vdRongcloudModule.h"
+#import "ecoRongcloudModule.h"
 #import <RongIMLib/RongIMLib.h>
 #import <CommonCrypto/CommonDigest.h>
-#import "vdRongcloud.h"
+#import "ecoRongcloud.h"
 #import <WeexPluginLoader/WeexPluginLoader.h>
 
-@interface vdRongcloudModule () <RCIMClientReceiveMessageDelegate, RCConnectionStatusChangeDelegate>
+@interface ecoRongcloudModule () <RCIMClientReceiveMessageDelegate, RCConnectionStatusChangeDelegate>
 
 @property (nonatomic, strong) NSString *roomID;
 @property (nonatomic, copy) WXModuleKeepAliveCallback eventHeandlerCallback;
@@ -26,9 +26,9 @@
 
 @end
 
-@implementation vdRongcloudModule
+@implementation ecoRongcloudModule
 
-WX_PlUGIN_EXPORT_MODULE(vdRongim, vdRongcloudModule)
+WX_PlUGIN_EXPORT_MODULE(ecoRongim, ecoRongcloudModule)
 WX_EXPORT_METHOD(@selector(login:callback:))
 WX_EXPORT_METHOD(@selector(logout))
 WX_EXPORT_METHOD(@selector(joinChatRoom:defMessageCount:callback:))
@@ -56,7 +56,7 @@ WX_EXPORT_METHOD(@selector(sendTextMessageToUserid:text:callback:))
     //header
     NSString *nonce = [NSString stringWithFormat:@"%d", rand()];
     long timestamp = (long)[[NSDate date] timeIntervalSince1970];
-    NSString *unionString = [NSString stringWithFormat:@"%@%@%ld", [vdRongcloud getRongSec], nonce, timestamp];
+    NSString *unionString = [NSString stringWithFormat:@"%@%@%ld", [ecoRongcloud getRongSec], nonce, timestamp];
     const char *cstr = [unionString cStringUsingEncoding:NSUTF8StringEncoding];
     NSData *data = [NSData dataWithBytes:cstr length:unionString.length];
     uint8_t digest[20];
@@ -71,7 +71,7 @@ WX_EXPORT_METHOD(@selector(sendTextMessageToUserid:text:callback:))
 
     NSString *timestampStr = [NSString stringWithFormat:@"%ld", timestamp];
 
-    [request setValue:[vdRongcloud getRongKey] forHTTPHeaderField:@"App-Key"];
+    [request setValue:[ecoRongcloud getRongKey] forHTTPHeaderField:@"App-Key"];
     [request setValue:nonce forHTTPHeaderField:@"Nonce"];
     [request setValue:timestampStr forHTTPHeaderField:@"Timestamp"];
     [request setValue:output forHTTPHeaderField:@"Signature"];
@@ -281,7 +281,7 @@ WX_EXPORT_METHOD(@selector(sendTextMessageToUserid:text:callback:))
     NSString *userimg = msgContent.senderUserInfo.portraitUri ? msgContent.senderUserInfo.portraitUri : @"";
     NSString *body = msgContent.content ? msgContent.content : @"";
     NSString *extra = msgContent.extra ? msgContent.extra : @"";
-    __weak typeof(vdRongcloudModule) *ws = self;
+    __weak typeof(ecoRongcloudModule) *ws = self;
     [[RCIMClient sharedRCIMClient] sendMessage:ConversationType_CHATROOM
                                       targetId:self.roomID
                                        content:msgContent
@@ -314,7 +314,7 @@ WX_EXPORT_METHOD(@selector(sendTextMessageToUserid:text:callback:))
     NSString *userimg = msgContent.senderUserInfo.portraitUri ? msgContent.senderUserInfo.portraitUri : @"";
     NSString *body = msgContent.content ? msgContent.content : @"";
     NSString *extra = msgContent.extra ? msgContent.extra : @"";
-    __weak typeof(vdRongcloudModule) *ws = self;
+    __weak typeof(ecoRongcloudModule) *ws = self;
     [[RCIMClient sharedRCIMClient] sendMessage:ConversationType_PRIVATE
                                       targetId:targetId
                                        content:msgContent

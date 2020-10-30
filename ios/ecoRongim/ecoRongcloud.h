@@ -1,5 +1,5 @@
 //
-//  vdRongcloud.h
+//  ecoRongcloud.h
 //
 //  Created by 高一 on 2019/3/1.
 //
@@ -11,7 +11,7 @@ static NSString *rongSec;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface vdRongcloud : NSObject
+@interface ecoRongcloud : NSObject
 
 + (instancetype)sharedManager;
 + (NSString*) getRongKey;

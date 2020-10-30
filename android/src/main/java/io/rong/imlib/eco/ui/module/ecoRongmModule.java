@@ -1,4 +1,4 @@
-package io.rong.imlib.vd.ui.module;
+package io.rong.imlib.eco.ui.module;
 
 
 import android.net.Uri;
@@ -19,17 +19,17 @@ import io.rong.imlib.library.fakeserver.FakeServer;
 import io.rong.imlib.library.fakeserver.HttpUtil;
 import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
-import io.rong.imlib.vd.ui.entry.vd_rongim;
+import io.rong.imlib.eco.ui.entry.eco_rongim;
 import io.rong.message.TextMessage;
-import app.vd.framework.extend.module.vdJson;
+import app.eco.framework.extend.module.ecoJson;
 
 /**
  * Created by WDM on 2018/4/29.
  */
 
-public class vdRongmModule extends WXModule {
+public class ecoRongmModule extends WXModule {
 
-    private static final String TAG = "vdRongmModule";
+    private static final String TAG = "ecoRongmModule";
 
     //事件接收者（用于防止重复监听）
     private static Handler mEventHandler;
@@ -58,7 +58,7 @@ public class vdRongmModule extends WXModule {
         data.put("errorCode", 0);
         data.put("errorMsg", "");
         //
-        JSONObject json = vdJson.parseObject(object);
+        JSONObject json = ecoJson.parseObject(object);
         if (json.size() == 0) {
             data.put("status", "error");
             data.put("errorCode", -801);
@@ -74,21 +74,21 @@ public class vdRongmModule extends WXModule {
             return;
         }
         //
-        final UserInfo user = new UserInfo(json.getString("userid"), vdJson.getString(json, "username", json.getString("userid")), Uri.parse(vdJson.getString(json, "userimg")));
+        final UserInfo user = new UserInfo(json.getString("userid"), ecoJson.getString(json, "username", json.getString("userid")), Uri.parse(ecoJson.getString(json, "userimg")));
         FakeServer.getToken(user, new HttpUtil.OnResponse() {
             @Override
             public void onResponse(int code, String body) {
                 if (code != 200) {
-                    JSONObject json = vdJson.parseObject(body);
+                    JSONObject json = ecoJson.parseObject(body);
                     data.put("status", "error");
-                    data.put("errorCode", vdJson.getInt(json, "code", -801));
-                    data.put("errorMsg", vdJson.getString(json, "errorMessage", body));
+                    data.put("errorCode", ecoJson.getInt(json, "code", -801));
+                    data.put("errorMsg", ecoJson.getString(json, "errorMessage", body));
                     invoke(callback, data);
                     return;
                 }
                 //
                 final String token = body;
-                vd_rongim.connect(body, new RongIMClient.ConnectCallback() {
+                eco_rongim.connect(body, new RongIMClient.ConnectCallback() {
                     @Override
                     public void onTokenIncorrect() {
                         data.put("status", "error");
@@ -99,7 +99,7 @@ public class vdRongmModule extends WXModule {
 
                     @Override
                     public void onSuccess(String userId) {
-                        vd_rongim.setCurrentUser(user);
+                        eco_rongim.setCurrentUser(user);
                         //
                         data.put("status", "success");
                         data.put("userid", userId);
@@ -124,7 +124,7 @@ public class vdRongmModule extends WXModule {
      */
     @JSMethod
     public void logout() {
-        vd_rongim.logout();
+        eco_rongim.logout();
     }
 
     /**
@@ -139,7 +139,7 @@ public class vdRongmModule extends WXModule {
         data.put("errorCode", 0);
         data.put("errorMsg", "");
         //
-        vd_rongim.joinChatRoom(roomId, defMessageCount, new RongIMClient.OperationCallback(){
+        eco_rongim.joinChatRoom(roomId, defMessageCount, new RongIMClient.OperationCallback(){
             @Override
             public void onSuccess() {
                 data.put("status", "success");
@@ -166,7 +166,7 @@ public class vdRongmModule extends WXModule {
         data.put("errorCode", 0);
         data.put("errorMsg", "");
         //
-        vd_rongim.quitChatRoom(new RongIMClient.OperationCallback() {
+        eco_rongim.quitChatRoom(new RongIMClient.OperationCallback() {
             @Override
             public void onSuccess() {
                 data.put("status", "success");
@@ -199,7 +199,7 @@ public class vdRongmModule extends WXModule {
                 @Override
                 public boolean handleMessage(Message msg) {
                     switch (msg.what) {
-                        case vd_rongim.MESSAGE_ARRIVED: {
+                        case eco_rongim.MESSAGE_ARRIVED: {
                             if (msg.obj instanceof TextMessage) {
                                 TextMessage message = (TextMessage) msg.obj;
                                 MessageContent content = (MessageContent) msg.obj;
@@ -224,7 +224,7 @@ public class vdRongmModule extends WXModule {
                             break;
                         }
 
-                        case vd_rongim.MESSAGE_SEND: {
+                        case eco_rongim.MESSAGE_SEND: {
                             if (msg.obj instanceof TextMessage) {
                                 TextMessage message = (TextMessage) msg.obj;
                                 MessageContent content = (MessageContent) msg.obj;
@@ -249,7 +249,7 @@ public class vdRongmModule extends WXModule {
                             break;
                         }
 
-                        case vd_rongim.MESSAGE_SEND_ERROR: {
+                        case eco_rongim.MESSAGE_SEND_ERROR: {
                             if (msg.obj instanceof TextMessage) {
                                 TextMessage message = (TextMessage) msg.obj;
                                 MessageContent content = (MessageContent) msg.obj;
@@ -277,7 +277,7 @@ public class vdRongmModule extends WXModule {
                     return false;
                 }
             });
-            vd_rongim.addEventHandler(mEventHandler);
+            eco_rongim.addEventHandler(mEventHandler);
         }
     }
 
@@ -289,7 +289,7 @@ public class vdRongmModule extends WXModule {
         if (mEventHandler == null) {
             return;
         }
-        vd_rongim.removeEventHandler(mEventHandler);
+        eco_rongim.removeEventHandler(mEventHandler);
         mEventHandler = null;
     }
 
@@ -303,7 +303,7 @@ public class vdRongmModule extends WXModule {
         if (text == null) {
             return;
         }
-        vd_rongim.sendMessage(TextMessage.obtain(text), new IRongCallback.ISendMessageCallback() {
+        eco_rongim.sendMessage(TextMessage.obtain(text), new IRongCallback.ISendMessageCallback() {
             @Override
             public void onAttached(io.rong.imlib.model.Message message) {
 
@@ -337,7 +337,7 @@ public class vdRongmModule extends WXModule {
         if (text == null) {
             return;
         }
-        vd_rongim.sendMessage(userid, TextMessage.obtain(text), new IRongCallback.ISendMessageCallback() {
+        eco_rongim.sendMessage(userid, TextMessage.obtain(text), new IRongCallback.ISendMessageCallback() {
             @Override
             public void onAttached(io.rong.imlib.model.Message message) {
 

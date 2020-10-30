@@ -1,23 +1,23 @@
 //
-//  vdRongcloud.m
+//  ecoRongcloud.m
 //
 //  Created by 高一 on 2019/3/1.
 //
 
-#import "vdRongcloud.h"
+#import "ecoRongcloud.h"
 #import "WeexSDKManager.h"
 #import "WeexInitManager.h"
-#import "vdRongcloudManager.h"
+#import "ecoRongcloudManager.h"
 #import "Config.h"
 
-WEEX_PLUGIN_INIT(vdRongcloud)
-@implementation vdRongcloud
+WEEX_PLUGIN_INIT(ecoRongcloud)
+@implementation ecoRongcloud
 
 + (instancetype) sharedManager {
     static dispatch_once_t onceToken;
-    static vdRongcloud *instance;
+    static ecoRongcloud *instance;
     dispatch_once(&onceToken, ^{
-        instance = [[vdRongcloud alloc] init];
+        instance = [[ecoRongcloud alloc] init];
     });
     return instance;
 }
@@ -39,7 +39,7 @@ WEEX_PLUGIN_INIT(vdRongcloud)
     if ([enabled containsString:@"1"] || [enabled containsString:@"true"]) {
         rongKey = [NSString stringWithFormat:@"%@", rongim[@"appKey"]];
         rongSec = [NSString stringWithFormat:@"%@", rongim[@"appSecret"]];
-        [[vdRongcloudManager sharedIntstance] init:rongKey appSecret:rongSec];
+        [[ecoRongcloudManager sharedIntstance] init:rongKey appSecret:rongSec];
     }
 }
 

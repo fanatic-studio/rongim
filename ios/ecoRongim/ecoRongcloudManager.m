@@ -1,24 +1,24 @@
 //
-//  vdRongcloudManager.m
+//  ecoRongcloudManager.m
 //  WeexTestDemo
 //
 //  Created by apple on 2018/7/9.
 //  Copyright © 2018年 TomQin. All rights reserved.
 //
 
-#import "vdRongcloudManager.h"
+#import "ecoRongcloudManager.h"
 #import <RongIMLib/RongIMLib.h>
 
-@interface vdRongcloudManager ()
+@interface ecoRongcloudManager ()
 
 @property (nonatomic, strong) NSString *appKey;
 @property (nonatomic, strong) NSString *appSecret;
 
 @end
 
-@implementation vdRongcloudManager
+@implementation ecoRongcloudManager
 
-+ (vdRongcloudManager *)sharedIntstance {
++ (ecoRongcloudManager *)sharedIntstance {
     static dispatch_once_t once;
     static id instance;
     dispatch_once(&once, ^{
